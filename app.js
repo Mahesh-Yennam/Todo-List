@@ -21,13 +21,13 @@ const todos = [
 ];
 
 app.get('/', (req, res) => {
-  console.log(todos);
+  // console.log(todos);
   res.render('index', { title: 'Todo List', todos })
 })
 
 app.post('/add-todo', (req, res) => {
     // Add a new todo item (ignore empty submissions)
-    console.log(req.body);
+    // console.log(req.body);
     const newTodo = (req.body['new-todo'] || '').toString().trim();
     if (newTodo) {
         todos.push({id: todos[todos.length - 1].id + 1, task: newTodo, completed: false});
@@ -36,7 +36,7 @@ app.post('/add-todo', (req, res) => {
 })
 
 app.post('/completed-todo', (req, res) => {
-    console.log(req.body);
+    // console.log(req.body);
     const id = parseInt(req.body.id);
     const todo = todos.find(todo => todo.id === id);
     if (todo) {
