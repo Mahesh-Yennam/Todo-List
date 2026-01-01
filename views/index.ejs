@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title><%= title %></title>
+    <style>
+      body {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+        background-color: #1e1e1e;
+      }
+      .container {
+        background-color: #333;
+        width: 30%;
+        margin: 20px auto;
+        text-align: center;
+        border-radius: 10px;
+      }
+      .title-section {
+        color: white;
+        padding-top: 20px;
+        font-size: 32px;
+        font-weight: bold;
+      }
+      .add-todo-section {
+        padding: 20px 0;
+      }
+      #new-todo {
+        width: 60%;
+        padding: 10px;
+        font-size: 16px;
+        border: none;
+        border-radius: 5px;
+      }
+      #add-todo-button {
+        margin-left: 10px;
+        padding: 10px 20px;
+        font-size: 16px;
+        border: none;
+        border-radius: 5px;
+        background-color: green;
+        color: white;
+        cursor: pointer;
+      }
+      .todo-item-section {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 20px;
+        border-bottom: 1px solid #ccc;
+        background-color: white;
+      }
+      .todo-item-section label {
+        margin-left: 10px;
+      }
+      .todo-item-section button {
+        padding: 5px 10px;
+        font-size: 14px;
+        border: none;
+        border-radius: 5px;
+        background-color: red;
+        color: white;
+        cursor: pointer;
+      }
+      input[type="checkbox"]:checked + label {
+        text-decoration: line-through;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="title-section">
+        <span><%= title %></span>
+      </div>
+      <div class="add-todo-section">
+        <form method="post" action="/add-todo">
+          <input
+            type="text"
+            id="new-todo"
+            name="new-todo"
+            placeholder="Add a new todo"
+          />
+          <button type="submit" id="add-todo-button">Add</button>
+        </form>
+      </div>
+      <% todos.forEach(function(todo){ %>
+      <div class="todo-item-section">
+        <form action="/completed-todo" method="post">
+          <input type="hidden" name="id" value="<%= todo.id %>" />
+          <input type="checkbox" id="todo-<%= todo.id %>" name="completed"
+          value="yes" <%= todo.completed ? 'checked' : '' %>
+          onchange="this.form.submit()" />
+          <label for="todo-<%= todo.id %>"><%= todo.task %></label>
+        </form>
+        <form action="/delete-todo" method="post">
+          <input type="hidden" name="id" value="<%= todo.id %>" />
+          <button type="submit">Delete</button>
+        </form>
+      </div>
+      <% }) %>
+    </div>
+  </body>
+</html>
